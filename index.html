@@ -1,1 +1,1071 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0b0d12">
+<title>MY LIFE</title>
 
+<style>
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+body{
+  margin:0;
+  background:#090b10;
+  color:#f5f7fb;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button,input,textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.app{
+  max-width:700px;
+  margin:auto;
+  min-height:100vh;
+  padding-bottom:90px;
+}
+
+/* HEADER */
+
+.header{
+  padding:24px 20px 15px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:800;
+}
+
+.date{
+  color:#8f96a3;
+  font-size:13px;
+}
+
+/* CONTENT */
+
+.content{
+  padding:0 16px;
+}
+
+.screen{
+  display:none;
+}
+
+.screen.active{
+  display:block;
+}
+
+.title{
+  font-size:29px;
+  font-weight:800;
+  margin:15px 4px 20px;
+}
+
+/* CARDS */
+
+.card{
+  background:#131720;
+  border:1px solid #242936;
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.card-title{
+  color:#969dab;
+  font-size:13px;
+  margin-bottom:7px;
+}
+
+.big{
+  font-size:30px;
+  font-weight:800;
+}
+
+/* DASHBOARD */
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.stat{
+  background:#131720;
+  border:1px solid #242936;
+  border-radius:18px;
+  padding:16px;
+}
+
+.stat-icon{
+  font-size:23px;
+}
+
+.stat-name{
+  color:#969dab;
+  font-size:12px;
+  margin-top:7px;
+}
+
+.stat-value{
+  font-size:24px;
+  font-weight:800;
+  margin-top:3px;
+}
+
+/* QUICK */
+
+.quick{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.quick button{
+  background:#171b25;
+  color:white;
+  border:1px solid #292f3b;
+  border-radius:15px;
+  padding:15px 10px;
+}
+
+/* LIST */
+
+.item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid #252a34;
+}
+
+.item:last-child{
+  border-bottom:0;
+}
+
+.check{
+  width:25px;
+  height:25px;
+  border-radius:50%;
+  border:2px solid #555d6c;
+  background:none;
+  flex:none;
+}
+
+.check.done{
+  background:#4ade80;
+  border-color:#4ade80;
+  position:relative;
+}
+
+.check.done:after{
+  content:"✓";
+  color:#07100b;
+  font-weight:900;
+  position:absolute;
+  left:5px;
+  top:1px;
+}
+
+.item-text{
+  flex:1;
+}
+
+.item-text.done{
+  text-decoration:line-through;
+  color:#686f7c;
+}
+
+.delete{
+  background:none;
+  border:0;
+  color:#777f8e;
+  font-size:20px;
+}
+
+/* INPUTS */
+
+.input{
+  width:100%;
+  background:#0e1118;
+  color:white;
+  border:1px solid #303643;
+  border-radius:13px;
+  padding:13px 14px;
+  outline:none;
+  margin-bottom:10px;
+}
+
+.input:focus{
+  border-color:#5b8cff;
+}
+
+textarea.input{
+  min-height:130px;
+  resize:vertical;
+}
+
+.primary{
+  width:100%;
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  background:#5b8cff;
+  color:white;
+  font-weight:700;
+}
+
+/* NAV */
+
+.nav{
+  position:fixed;
+  bottom:12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:min(670px,calc(100% - 20px));
+  background:rgba(20,23,31,.94);
+  backdrop-filter:blur(15px);
+  border:1px solid #303541;
+  border-radius:22px;
+  padding:8px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  z-index:50;
+}
+
+.nav button{
+  background:none;
+  border:0;
+  color:#777f8e;
+  padding:7px 2px;
+  font-size:11px;
+}
+
+.nav button span{
+  display:block;
+  font-size:21px;
+  margin-bottom:2px;
+}
+
+.nav button.active{
+  color:#6d9aff;
+}
+
+/* NOTE */
+
+.note{
+  background:#151923;
+  border:1px solid #282e3a;
+  border-radius:17px;
+  padding:16px;
+  margin-bottom:12px;
+}
+
+.note-title{
+  font-weight:800;
+  margin-bottom:6px;
+}
+
+.note-body{
+  color:#a8aebb;
+  white-space:pre-wrap;
+  font-size:14px;
+}
+
+/* GOALS */
+
+.progress{
+  height:9px;
+  background:#282d38;
+  border-radius:10px;
+  overflow:hidden;
+  margin:12px 0;
+}
+
+.progress-bar{
+  height:100%;
+  background:#5b8cff;
+  border-radius:10px;
+}
+
+/* MONEY */
+
+.money{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.income{
+  color:#4ade80;
+}
+
+.expense{
+  color:#fb7185;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:100;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(700px,100%);
+  background:#131720;
+  border:1px solid #303541;
+  border-radius:25px 25px 0 0;
+  padding:22px;
+  max-height:90vh;
+  overflow:auto;
+}
+
+.modal-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.close{
+  background:#252a34;
+  border:0;
+  color:white;
+  width:35px;
+  height:35px;
+  border-radius:50%;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:30px 10px;
+  color:#737b89;
+}
+
+.small{
+  color:#8e96a4;
+  font-size:13px;
+}
+
+@media(min-width:700px){
+  .nav{
+    bottom:20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+  <div>
+    <div class="logo">🧠 MY LIFE</div>
+    <div class="date" id="today"></div>
+  </div>
+  <div>⚙️</div>
+</header>
+
+<main class="content">
+
+<!-- HOME -->
+
+<section id="home" class="screen active">
+
+<h1 class="title">Головна</h1>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-icon">✅</div>
+<div class="stat-name">Завдання</div>
+<div class="stat-value" id="statTasks">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">🎯</div>
+<div class="stat-name">Цілі</div>
+<div class="stat-value" id="statGoals">0</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">💰</div>
+<div class="stat-name">Баланс</div>
+<div class="stat-value" id="statBalance">€0</div>
+</div>
+
+<div class="stat">
+<div class="stat-icon">📝</div>
+<div class="stat-name">Нотатки</div>
+<div class="stat-value" id="statNotes">0</div>
+</div>
+
+</div>
+
+<div class="card" style="margin-top:15px">
+<div class="card-title">СЬОГОДНІ</div>
+<div class="big" id="homeGreeting">Привіт 👋</div>
+<p class="small">Організуй свій день і тримай усе під контролем.</p>
+</div>
+
+<div class="card">
+<div class="card-title">ШВИДКІ ДІЇ</div>
+
+<div class="quick">
+<button onclick="openTaskModal()">➕<br>Завдання</button>
+<button onclick="openNoteModal()">📝<br>Нотатка</button>
+<button onclick="openGoalModal()">🎯<br>Ціль</button>
+<button onclick="openMoneyModal()">💰<br>Гроші</button>
+</div>
+</div>
+
+<div class="card">
+<div class="card-title">СЬОГОДНІШНІ ЗАВДАННЯ</div>
+<div id="homeTasks"></div>
+</div>
+
+</section>
+
+
+<!-- TASKS -->
+
+<section id="tasks" class="screen">
+
+<h1 class="title">Завдання</h1>
+
+<button class="primary" onclick="openTaskModal()">＋ Додати завдання</button>
+
+<div class="card" style="margin-top:15px">
+<div id="taskList"></div>
+</div>
+
+</section>
+
+
+<!-- NOTES -->
+
+<section id="notes" class="screen">
+
+<h1 class="title">Нотатки</h1>
+
+<button class="primary" onclick="openNoteModal()">＋ Нова нотатка</button>
+
+<div style="margin-top:15px" id="noteList"></div>
+
+</section>
+
+
+<!-- GOALS -->
+
+<section id="goals" class="screen">
+
+<h1 class="title">Цілі</h1>
+
+<button class="primary" onclick="openGoalModal()">＋ Нова ціль</button>
+
+<div style="margin-top:15px" id="goalList"></div>
+
+</section>
+
+
+<!-- MONEY -->
+
+<section id="money" class="screen">
+
+<h1 class="title">Фінанси</h1>
+
+<div class="card money">
+<div>
+<div class="card-title">БАЛАНС</div>
+<div class="big" id="moneyBalance">€0</div>
+</div>
+💰
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="stat-name">ДОХОДИ</div>
+<div class="stat-value income" id="moneyIncome">€0</div>
+</div>
+
+<div class="stat">
+<div class="stat-name">ВИТРАТИ</div>
+<div class="stat-value expense" id="moneyExpense">€0</div>
+</div>
+
+</div>
+
+<button class="primary" style="margin-top:15px" onclick="openMoneyModal()">＋ Додати операцію</button>
+
+<div class="card" style="margin-top:15px">
+<div class="card-title">ІСТОРІЯ</div>
+<div id="moneyList"></div>
+</div>
+
+</section>
+
+</main>
+
+
+<!-- NAV -->
+
+<nav class="nav">
+
+<button class="active" onclick="showScreen('home',this)">
+<span>🏠</span>Головна
+</button>
+
+<button onclick="showScreen('tasks',this)">
+<span>✅</span>Справи
+</button>
+
+<button onclick="showScreen('notes',this)">
+<span>📝</span>Нотатки
+</button>
+
+<button onclick="showScreen('goals',this)">
+<span>🎯</span>Цілі
+</button>
+
+<button onclick="showScreen('money',this)">
+<span>💰</span>Гроші
+</button>
+
+</nav>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal" id="modal">
+
+<div class="modal-box">
+
+<div class="modal-head">
+<h2 id="modalTitle">Нове</h2>
+<button class="close" onclick="closeModal()">×</button>
+</div>
+
+<div id="modalContent"></div>
+
+</div>
+
+</div>
+
+
+<script>
+
+const STORAGE_KEY="myLifeOrganizer";
+
+let data=JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+tasks:[],
+notes:[],
+goals:[],
+money:[]
+};
+
+function save(){
+localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+render();
+}
+
+function render(){
+
+renderTasks();
+renderNotes();
+renderGoals();
+renderMoney();
+updateStats();
+
+}
+
+function showScreen(id,btn){
+
+document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+
+document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));
+if(btn) btn.classList.add("active");
+
+window.scrollTo(0,0);
+
+}
+
+function openModal(title,html){
+
+document.getElementById("modalTitle").textContent=title;
+document.getElementById("modalContent").innerHTML=html;
+document.getElementById("modal").classList.add("show");
+
+}
+
+function closeModal(){
+document.getElementById("modal").classList.remove("show");
+}
+
+
+/* TASKS */
+
+function openTaskModal(){
+
+openModal("Нове завдання",`
+
+<input class="input" id="taskName" placeholder="Що потрібно зробити?">
+
+<input class="input" id="taskDate" type="date">
+
+<select class="input" id="taskPriority">
+<option value="normal">Звичайний пріоритет</option>
+<option value="high">🔴 Високий пріоритет</option>
+<option value="low">🟢 Низький пріоритет</option>
+</select>
+
+<button class="primary" onclick="addTask()">Додати</button>
+
+`);
+
+}
+
+function addTask(){
+
+const name=document.getElementById("taskName").value.trim();
+
+if(!name)return;
+
+data.tasks.push({
+id:Date.now(),
+name,
+date:document.getElementById("taskDate").value,
+priority:document.getElementById("taskPriority").value,
+done:false
+});
+
+save();
+closeModal();
+
+}
+
+function toggleTask(id){
+
+const t=data.tasks.find(x=>x.id===id);
+
+if(t)t.done=!t.done;
+
+save();
+
+}
+
+function deleteTask(id){
+
+data.tasks=data.tasks.filter(x=>x.id!==id);
+
+save();
+
+}
+
+function taskHTML(t){
+
+return `
+<div class="item">
+
+<button class="check ${t.done?"done":""}" onclick="toggleTask(${t.id})"></button>
+
+<div class="item-text ${t.done?"done":""}">
+
+${t.priority==="high"?"🔴 ":""}${t.priority==="low"?"🟢 ":""}${escapeHTML(t.name)}
+
+<div class="small">${t.date||"Без дати"}</div>
+
+</div>
+
+<button class="delete" onclick="deleteTask(${t.id})">×</button>
+
+</div>
+`;
+
+}
+
+function renderTasks(){
+
+const list=document.getElementById("taskList");
+
+if(!data.tasks.length){
+
+list.innerHTML=`<div class="empty">Поки немає завдань.<br>Додай перше 👆</div>`;
+
+}else{
+
+list.innerHTML=data.tasks.map(taskHTML).join("");
+
+}
+
+const home=document.getElementById("homeTasks");
+
+const today=new Date().toISOString().slice(0,10);
+
+const todayTasks=data.tasks.filter(x=>x.date===today || !x.date).slice(0,5);
+
+home.innerHTML=todayTasks.length
+?todayTasks.map(taskHTML).join("")
+:`<div class="empty">На сьогодні нічого немає 🎉</div>`;
+
+}
+
+
+/* NOTES */
+
+function openNoteModal(){
+
+openModal("Нова нотатка",`
+
+<input class="input" id="noteTitle" placeholder="Назва">
+
+<textarea class="input" id="noteBody" placeholder="Напиши щось..."></textarea>
+
+<button class="primary" onclick="addNote()">Зберегти</button>
+
+`);
+
+}
+
+function addNote(){
+
+const title=document.getElementById("noteTitle").value.trim();
+const body=document.getElementById("noteBody").value.trim();
+
+if(!title && !body)return;
+
+data.notes.unshift({
+id:Date.now(),
+title:title||"Без назви",
+body
+});
+
+save();
+closeModal();
+
+}
+
+function deleteNote(id){
+
+data.notes=data.notes.filter(x=>x.id!==id);
+
+save();
+
+}
+
+function renderNotes(){
+
+const list=document.getElementById("noteList");
+
+if(!data.notes.length){
+
+list.innerHTML=`<div class="empty">Нотаток ще немає 📝</div>`;
+
+return;
+
+}
+
+list.innerHTML=data.notes.map(n=>`
+
+<div class="note">
+
+<div class="note-title">${escapeHTML(n.title)}</div>
+
+<div class="note-body">${escapeHTML(n.body)}</div>
+
+<div style="text-align:right;margin-top:10px">
+<button class="delete" onclick="deleteNote(${n.id})">Видалити</button>
+</div>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* GOALS */
+
+function openGoalModal(){
+
+openModal("Нова ціль",`
+
+<input class="input" id="goalName" placeholder="Назва цілі">
+
+<input class="input" id="goalTarget" type="number" placeholder="Цільова сума / значення">
+
+<input class="input" id="goalCurrent" type="number" placeholder="Поточний прогрес">
+
+<button class="primary" onclick="addGoal()">Створити</button>
+
+`);
+
+}
+
+function addGoal(){
+
+const name=document.getElementById("goalName").value.trim();
+const target=Number(document.getElementById("goalTarget").value);
+const current=Number(document.getElementById("goalCurrent").value);
+
+if(!name || !target)return;
+
+data.goals.push({
+id:Date.now(),
+name,
+target,
+current:current||0
+});
+
+save();
+closeModal();
+
+}
+
+function deleteGoal(id){
+
+data.goals=data.goals.filter(x=>x.id!==id);
+
+save();
+
+}
+
+function renderGoals(){
+
+const list=document.getElementById("goalList");
+
+if(!data.goals.length){
+
+list.innerHTML=`<div class="empty">Цілей ще немає 🎯</div>`;
+
+return;
+
+}
+
+list.innerHTML=data.goals.map(g=>{
+
+const percent=Math.min(100,Math.max(0,(g.current/g.target)*100));
+
+return `
+
+<div class="card">
+
+<div style="display:flex;justify-content:space-between">
+
+<strong>${escapeHTML(g.name)}</strong>
+
+<button class="delete" onclick="deleteGoal(${g.id})">×</button>
+
+</div>
+
+<div class="small">${g.current} / ${g.target}</div>
+
+<div class="progress">
+<div class="progress-bar" style="width:${percent}%"></div>
+</div>
+
+<div class="small">${percent.toFixed(0)}% виконано</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+/* MONEY */
+
+function openMoneyModal(){
+
+openModal("Нова операція",`
+
+<select class="input" id="moneyType">
+
+<option value="income">💚 Дохід</option>
+<option value="expense">❤️ Витрата</option>
+
+</select>
+
+<input class="input" id="moneyAmount" type="number" step="0.01" placeholder="Сума €">
+
+<input class="input" id="moneyName" placeholder="Наприклад: зарплата / продукти">
+
+<button class="primary" onclick="addMoney()">Зберегти</button>
+
+`);
+
+}
+
+function addMoney(){
+
+const type=document.getElementById("moneyType").value;
+const amount=Number(document.getElementById("moneyAmount").value);
+const name=document.getElementById("moneyName").value.trim();
+
+if(!amount)return;
+
+data.money.unshift({
+id:Date.now(),
+type,
+amount,
+name:name||"Без назви",
+date:new Date().toLocaleDateString("uk-UA")
+});
+
+save();
+closeModal();
+
+}
+
+function deleteMoney(id){
+
+data.money=data.money.filter(x=>x.id!==id);
+
+save();
+
+}
+
+function renderMoney(){
+
+let income=0;
+let expense=0;
+
+data.money.forEach(m=>{
+
+if(m.type==="income")income+=m.amount;
+else expense+=m.amount;
+
+});
+
+const balance=income-expense;
+
+document.getElementById("moneyIncome").textContent="€"+income.toFixed(2);
+document.getElementById("moneyExpense").textContent="€"+expense.toFixed(2);
+document.getElementById("moneyBalance").textContent="€"+balance.toFixed(2);
+
+const list=document.getElementById("moneyList");
+
+if(!data.money.length){
+
+list.innerHTML=`<div class="empty">Операцій ще немає 💸</div>`;
+
+return;
+
+}
+
+list.innerHTML=data.money.map(m=>`
+
+<div class="item">
+
+<div class="item-text">
+
+<strong>${m.type==="income"?"💚":"❤️"} ${escapeHTML(m.name)}</strong>
+
+<div class="small">${m.date}</div>
+
+</div>
+
+<div class="${m.type==="income"?"income":"expense"}">
+
+${m.type==="income"?"+":"-"}€${m.amount.toFixed(2)}
+
+</div>
+
+<button class="delete" onclick="deleteMoney(${m.id})">×</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* STATS */
+
+function updateStats(){
+
+document.getElementById("statTasks").textContent=
+data.tasks.filter(x=>!x.done).length;
+
+document.getElementById("statGoals").textContent=
+data.goals.length;
+
+document.getElementById("statNotes").textContent=
+data.notes.length;
+
+let balance=0;
+
+data.money.forEach(m=>{
+balance+=m.type==="income"?m.amount:-m.amount;
+});
+
+document.getElementById("statBalance").textContent=
+"€"+balance.toFixed(0);
+
+}
+
+
+/* SECURITY */
+
+function escapeHTML(str){
+
+return String(str)
+.replaceAll("&","&amp;")
+.replaceAll("<","&lt;")
+.replaceAll(">","&gt;")
+.replaceAll('"',"&quot;")
+.replaceAll("'","&#039;");
+
+}
+
+
+/* DATE */
+
+const now=new Date();
+
+document.getElementById("today").textContent=
+now.toLocaleDateString("uk-UA",{
+weekday:"long",
+day:"numeric",
+month:"long"
+});
+
+
+/* START */
+
+render();
+
+</script>
+
+</body>
+</html>
